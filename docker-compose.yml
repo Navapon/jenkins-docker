@@ -5,10 +5,7 @@ services:
     build: ./jenkins
     restart: unless-stopped
     ports:
-      - target: 8081
-        published: 8081
-        protocol: tcp
-        mode: host
+      - 8081:8080
     volumes:
       - ./jenkins/data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
