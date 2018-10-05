@@ -6,16 +6,28 @@ volumes:
 services:
   jenkins:
     image: jenkins-docker
-    build: .
+    build: ./jenkins
     restart: unless-stopped
     ports:
-      - target: 8080
-        published: 8080
+      - target: 8081
+        published: 8081
         protocol: tcp
         mode: host
     volumes:
       - jenkins-home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     container_name: jenkins-docker
+  sonarqube:
+    image: sonarqube:6.7.5-alpine
+    container_name: sonarqube
+    ports:
+      - 8080:9000
+      - 9092:9092
+    volumes:
+      - ./sonarqube/config:/opt/sonarqube/conf
+      - ./sonarqube/data:/opt/sonarqube/data
+      - ./sonarqube/extensions:/opt/sonarqube/extensions
+      - ./sonarqube/plugins:/opt/sonarqube/lib/bundled-plugins
+  
         
 

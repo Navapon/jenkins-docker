@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:2.138.1
 
 ARG GOSU_VERSION=1.10
 
@@ -17,6 +17,9 @@ RUN apt-get update \
  && curl -sSL https://get.docker.com/ | sh \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
 # entrypoint is used to update docker gid and revert back to jenkins user
 COPY entrypoint.sh /entrypoint.sh
